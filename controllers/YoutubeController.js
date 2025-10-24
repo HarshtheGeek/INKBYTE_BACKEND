@@ -1,18 +1,21 @@
 const { summarizeSubtitles } = require("../services/YoutubeVideoServices");
 const { getYoutubeVideoId } = require("../services/VideoIdServices");
 const { getTranscript } = require("../services/YoutubeTranscriptionService");
+const redisClient = require('../config/redis');
+
 
 const summarizeController = async (req, res) => {
   try {
     const { VideoUrl } = req.body;
 
-    // Validate request body
+    // Validate request body - Jo bhi youtube url user ke paas se aa raha hai woh hum nikal lenge
     if (!VideoUrl) {
       return res.status(400).json({
         message: "VideoUrl is required. Please try again.",
         success: false,
       });
     }
+
 
     // Extract YouTube video ID
     const VideoId = getYoutubeVideoId(VideoUrl);
@@ -23,9 +26,20 @@ const summarizeController = async (req, res) => {
       });
     }
 
-    console.log(`Fetching transcript for video ID: ${VideoId}`);
+    //Redis summary extraction from the video id
+    const CachedData = await redisClient.get(VideoId);
+    if(CachedData){
+      console.log("Cached data exists and has been fetched successfully!");
+      return res.status(200).json({
+        success : true , 
+        videoId : VideoId,
+        summary : CachedData,
+      })
+    }
 
-    // Fetch transcript
+    console.log(`Fetching transcript for video ID: ${VideoId}`)
+
+    // Fetch transcript - Using the transcription api
     let transcript = await getTranscript(VideoId);
     transcript = transcript?.trim();
     
@@ -42,12 +56,17 @@ const summarizeController = async (req, res) => {
     // Summarize transcript
     const summary = await summarizeSubtitles(transcript);
 
+    await redisClient.set(VideoId,summary,{EX : 84000});
+
     return res.status(200).json({
       message: "Summary fetched successfully",
       success: true,
       videoId: VideoId,
       summary,
     });
+
+
+
   } catch (error) {
     console.error("SummarizeController Error:", error.message);
 
