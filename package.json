@@ -14,6 +14,7 @@
   "dependencies": {
     "@distube/ytdl-core": "^4.16.12",
     "@google/generative-ai": "^0.24.1",
+    "@upstash/redis": "^0.0.0-ci.4feb3fc2b732a965d4c727bcd8c6a56f75d3f717-20250411122840",
     "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",

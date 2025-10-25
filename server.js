@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const connectDB = require('./config/mongodb_config');
 const youtubeRoutes = require('./routes/youtubeService-route');
 const flashcardRoutes = require('./routes/flashCardService-route');
+const redis = require('./config/redis');
 
 const app = express();
 
@@ -20,8 +21,20 @@ app.use(express.urlencoded({ extended: true }));
 // Connect to Database
 connectDB();
 
-// Routes
 
+// Redis connectivity test on server startup
+(async () => {
+  try {
+    await redis.set("server:status", "Redis connected successfully!", { ex: 60 });
+    const status = await redis.get("server:status");
+    console.log("✅ Redis check success:", status);
+  } catch (err) {
+    console.error("❌ Redis connection failed:", err.message);
+  }
+})();
+
+
+// Routes
 app.use('/api', youtubeRoutes);
 app.use('/api', flashcardRoutes);
 

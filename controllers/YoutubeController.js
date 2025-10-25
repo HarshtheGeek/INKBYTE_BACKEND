@@ -1,7 +1,7 @@
 const { summarizeSubtitles } = require("../services/YoutubeVideoServices");
 const { getYoutubeVideoId } = require("../services/VideoIdServices");
 const { getTranscript } = require("../services/YoutubeTranscriptionService");
-const redisClient = require('../config/redis');
+const redis = require('../config/redis');
 
 
 const summarizeController = async (req, res) => {
@@ -27,7 +27,7 @@ const summarizeController = async (req, res) => {
     }
 
     //Redis summary extraction from the video id
-    const CachedData = await redisClient.get(VideoId);
+    const CachedData = await redis.get(VideoId);
     if(CachedData){
       console.log("Cached data exists and has been fetched successfully!");
       return res.status(200).json({
@@ -56,7 +56,7 @@ const summarizeController = async (req, res) => {
     // Summarize transcript
     const summary = await summarizeSubtitles(transcript);
 
-    await redisClient.set(VideoId,summary,{EX : 84000});
+    await redis.set(VideoId,summary,{ex : 86400});
 
     return res.status(200).json({
       message: "Summary fetched successfully",

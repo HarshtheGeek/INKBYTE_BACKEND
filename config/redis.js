@@ -1,15 +1,10 @@
 require('dotenv').config();
-const { createClient } = require("redis");
+const { Redis } = require('@upstash/redis');
 
-const redisClient = createClient({
-  url: process.env.REDIS_URL ,
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-redisClient.on("connect", () => console.log("Redis connected"));
-redisClient.on("error", (err) => console.error("Redis Error:", err));
-
-(async () => {
-  await redisClient.connect();
-})();
-
-module.exports = redisClient;
+module.exports = redis;
