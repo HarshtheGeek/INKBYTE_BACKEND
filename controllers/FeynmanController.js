@@ -4,10 +4,10 @@ const feynmanController = async (req,res) => {
 
     try{
         //we took the recognized text from the req.body
-    const {recognizedText} = req.body ; 
+    const {recognizedUserText} = req.body ; 
 
     //if no recognized text is there we return some error
-    if (!recognizedText) {
+    if (!recognizedUserText) {
   return res.status(400).json({
     message: "recognizedText is required. Please try again.",
     success: false,
@@ -16,12 +16,12 @@ const feynmanController = async (req,res) => {
 
 
     //if we get the recognized text we send it to feynsummarizer
-    const feynSummary = await feynSummarizer(recognizedText);
+    const feynmanQueryResponse = await feynSummarizer(recognizedUserText);
 
     return res.status(200).json({
       message: "Summary fetched successfully",
       success: true,
-      feynSummary,
+      feynmanQueryResponse,
     });
 
     }catch(error){

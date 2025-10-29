@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const connectDB = require('./config/mongodb_config');
 const youtubeRoutes = require('./routes/youtubeService-route');
 const flashcardRoutes = require('./routes/flashCardService-route');
+const feynmanRoutes = require('./routes/feynmannService-route');
 const redis = require('./config/redis');
 
 const app = express();
@@ -27,9 +28,9 @@ connectDB();
   try {
     await redis.set("server:status", "Redis connected successfully!", { ex: 60 });
     const status = await redis.get("server:status");
-    console.log("✅ Redis check success:", status);
+    console.log("Redis connection success:", status);
   } catch (err) {
-    console.error("❌ Redis connection failed:", err.message);
+    console.error("Redis connection failed:", err.message);
   }
 })();
 
@@ -37,6 +38,7 @@ connectDB();
 // Routes
 app.use('/api', youtubeRoutes);
 app.use('/api', flashcardRoutes);
+app.use('/api',feynmanRoutes)
 
 // Start server
 const PORT = process.env.PORT || 4000;
