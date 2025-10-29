@@ -1,7 +1,6 @@
-// Load environment variables
-require('dotenv').config(); // <-- You missed parentheses
+require('dotenv').config();
 
-// Store your Gemini keys from .env
+// Storing my Gemini keys from .env
 const GeminiKeys = [
   process.env.GEMINI_KEY_1,
   process.env.GEMINI_KEY_2,

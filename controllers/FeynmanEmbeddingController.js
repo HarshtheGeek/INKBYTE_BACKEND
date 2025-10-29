@@ -2,6 +2,8 @@ const FeynmanEmbeddingService = require("../services/FeynmannEmbeddingService");
 
 const feynmanEmbeddingController = async (req, res) => {
   try {
+
+    //Req body se ye do cheezei leli
     const { feynmanQueryResponse, feynmanUserResponse } = req.body;
 
     if (!feynmanQueryResponse || !feynmanUserResponse) {
@@ -11,6 +13,7 @@ const feynmanEmbeddingController = async (req, res) => {
       });
     }
 
+    //Extracted the coseine similarity of the queries and responses
     const result = await FeynmanEmbeddingService(
       feynmanQueryResponse,
       feynmanUserResponse
@@ -26,6 +29,7 @@ const feynmanEmbeddingController = async (req, res) => {
     const similarity = result.similarityScore;
     let feedback = "";
 
+    //condition to check, agar 85 se uppar means well n good else can be improved else lets see
     if (similarity >= 0.85) feedback = "Excellent! You explained it very well!";
     else if (similarity >= 0.65) feedback = "Good effort! You are getting there.";
     else feedback = "Needs improvement. Try explaining it again in simpler words.";

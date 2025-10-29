@@ -1,4 +1,4 @@
-// Service to extract YouTube video ID
+// Service to extract YouTube video ID - GPT waala code hai ye
 const getYoutubeVideoId = (videoUrl) => {
   try {
     const url = new URL(videoUrl);

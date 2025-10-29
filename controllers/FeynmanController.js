@@ -3,7 +3,7 @@ const {feynSummarizer} = require('../services/FeynmanSummaryService');
 const feynmanController = async (req,res) => {
 
     try{
-        //we took the recognized text from the req.body
+        //we take this recognized text from the req.body jo flutter se ayega
     const {recognizedUserText} = req.body ; 
 
     //if no recognized text is there we return some error
@@ -13,7 +13,6 @@ const feynmanController = async (req,res) => {
     success: false,
   });
 }
-
 
     //if we get the recognized text we send it to feynsummarizer
     const feynmanQueryResponse = await feynSummarizer(recognizedUserText);

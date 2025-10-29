@@ -1,7 +1,6 @@
 const axios = require("axios");
 const { getRandomGeminiKey } = require("../utils/GeminiKeys");
 
-// --- Helper: delay ---
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -37,7 +36,7 @@ Your job is to **explain topics like user is 12 years old in just 200 words (Fey
       { headers: { "Content-Type": "application/json" }, timeout: 20000 }
     );
 
-    // --- Safe check for Gemini response ---
+    //Safe check for Gemini response taaki baad mei dikkat na ho
     const candidate = response.data?.candidates?.[0];
     if (!candidate?.content?.parts?.[0]?.text) {
       throw new Error("No summary returned from Gemini API");
@@ -49,7 +48,7 @@ Your job is to **explain topics like user is 12 years old in just 200 words (Fey
 
     // Retry if model is overloaded
     if (message.includes("overloaded") && attempt < maxRetries) {
-      const waitTime = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s, 16s, ...
+      const waitTime = Math.pow(2, attempt) * 1000;
       console.log(`Model overloaded. Retrying in ${waitTime / 1000}s...`);
       await delay(waitTime);
       return feynSummarizer(recognizedUserText, attempt + 1, maxRetries);

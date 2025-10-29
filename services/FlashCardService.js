@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { getRandomGeminiKey } = require("../utils/GeminiKeys");
 
-// --- Helper: delay ---
+
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -46,7 +46,6 @@ Warning : Do NOT include any markdown, code blocks, or extra text only return pu
     try {
       return JSON.parse(text);
     } catch (parseError) {
-      // Cleanup common formatting issues (like ```json blocks)
       const cleanedText = text
         .replace(/```json/g, "")
         .replace(/```/g, "")

@@ -1,7 +1,6 @@
-// Load environment variables
 require('dotenv').config();
 
-// Store your transcription keys from .env
+// Storing transcription keys from .env
 const TranscriptionKeys = [
   process.env.TRANSCRIPTION_KEY_1,
   process.env.TRANSCRIPTION_KEY_2,

@@ -1,7 +1,6 @@
 const axios = require("axios");
 const { getRandomGeminiKey } = require("../utils/GeminiKeys");
 
-// --- Helper: delay ---
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -41,7 +40,6 @@ ${subtitles}`
       { headers: { "Content-Type": "application/json" }, timeout: 50000 }
     );
 
-    // --- Safe check for Gemini response ---
     const candidate = response.data?.candidates?.[0];
     if (!candidate?.content?.parts?.[0]?.text) {
       throw new Error("No summary returned from Gemini API");
