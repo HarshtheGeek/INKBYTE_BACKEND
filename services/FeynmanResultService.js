@@ -1,12 +1,12 @@
 const axios = require("axios");
-const {feynmanPrompt} = require('../prompts/feynmanSummaryprompt');
+const {feynSimilarityPrompt} = require("../prompts/feynmanresultprompt");
 const { getRandomGeminiKey } = require("../utils/GeminiKeys");
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
- const feynSummarizer = async (recognizedUserText, attempt = 1, maxRetries = 5) => {
+const feynSimilarity = async (similarity,feynmanQueryResponse,feynmanUserResponse, attempt = 1, maxRetries = 3) => {
   const apiKey = getRandomGeminiKey();
   console.log(`Using Gemini API Key: ${apiKey} | Attempt ${attempt}`);
 
@@ -18,7 +18,7 @@ function delay(ms) {
           {
             parts: [
               {
-                text: feynmanPrompt(recognizedUserText)
+                text: feynSimilarityPrompt(similarity,feynmanQueryResponse,feynmanUserResponse)
               }
             ]
           }
@@ -27,26 +27,27 @@ function delay(ms) {
       { headers: { "Content-Type": "application/json" }, timeout: 20000 }
     );
 
-    //Safe check for Gemini response taaki baad mei dikkat na ho
+    // Safe check for Gemini response
     const candidate = response.data?.candidates?.[0];
     if (!candidate?.content?.parts?.[0]?.text) {
       throw new Error("No summary returned from Gemini API");
     }
 
     return candidate.content.parts[0].text;
+
   } catch (error) {
     const message = error.response?.data?.error?.message || error.message;
 
-    // Retry if model is overloaded
     if (message.includes("overloaded") && attempt < maxRetries) {
       const waitTime = Math.pow(2, attempt) * 1000;
       console.log(`Model overloaded. Retrying in ${waitTime / 1000}s...`);
       await delay(waitTime);
-      return feynSummarizer(recognizedUserText, attempt + 1, maxRetries);
+      return feynSimilarity(similarity, attempt + 1, maxRetries);
     }
 
+    // Throw final error
     throw new Error(message || "Gemini API request failed");
   }
-}
+};
 
-module.exports = { feynSummarizer };
+module.exports = { feynSimilarity };

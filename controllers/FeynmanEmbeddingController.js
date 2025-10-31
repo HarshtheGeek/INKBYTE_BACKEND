@@ -1,5 +1,5 @@
 const FeynmanEmbeddingService = require("../services/FeynmannEmbeddingService");
-
+const { feynSimilarity } = require("../services/FeynmanResultService");
 const feynmanEmbeddingController = async (req, res) => {
   try {
 
@@ -27,18 +27,14 @@ const feynmanEmbeddingController = async (req, res) => {
     }
 
     const similarity = result.similarityScore;
-    let feedback = "";
 
-    //condition to check, agar 85 se uppar means well n good else can be improved else lets see
-    if (similarity >= 0.85) feedback = "Excellent! You explained it very well!";
-    else if (similarity >= 0.65) feedback = "Good effort! You are getting there.";
-    else feedback = "Needs improvement. Try explaining it again in simpler words.";
+    const similarityResult = await feynSimilarity(similarity,feynmanQueryResponse,feynmanUserResponse);
 
     return res.status(200).json({
       message: "Cosine similarity calculated successfully.",
       success: true,
       similarity: similarity.toFixed(4),
-      feedback,
+      similarityResult
     });
 
   } catch (error) {

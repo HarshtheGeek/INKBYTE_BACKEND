@@ -1,3 +1,4 @@
+const {flashCardPrompt} = require('../prompts/flashprompt');
 const axios = require("axios");
 const { getRandomGeminiKey } = require("../utils/GeminiKeys");
 
@@ -8,19 +9,9 @@ function delay(ms) {
 
 async function FlashCardService(topic, attempt = 1, maxRetries = 5) {
   const apiKey = getRandomGeminiKey();
+  const prompt = flashCardPrompt(topic);
 
   try {
-    const prompt = `
-You are a flashcard generator. 
-Generate exactly 10 flashcards on the topic: "${topic}".
-Return the flashcards **only** as a valid JSON array in this format:
-[
-  {"question": "What is ...?", "answer": "Explanation..."},
-  {"question": "Why ...?", "answer": "Because ..."}
-]
-Warning : Do NOT include any markdown, code blocks, or extra text only return pure JSON.
-`;
-
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
       {
