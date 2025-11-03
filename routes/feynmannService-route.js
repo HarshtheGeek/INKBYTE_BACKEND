@@ -7,6 +7,6 @@ const router = express.Router();
 //First route is for feynman summary
 router.post('/feynmann', feynmanController);
 //Second route is for embedding that we are getting
-router.post("/compare", feynmanEmbeddingController);
+router.post("/feynman-embedding", feynmanEmbeddingController);
 
 module.exports = router;
