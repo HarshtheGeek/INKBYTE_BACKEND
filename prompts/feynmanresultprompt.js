@@ -6,18 +6,26 @@
  * @returns {string} Formatted AI prompt text.
  */
 const feynSimilarityPrompt = (similarity, feynmanQueryResponse, feynmanUserResponse) => `
-You are an insightful reviewer evaluating a user's explanation using the Feynman technique.
+You are an evaluator reviewing a user's explanation using the Feynman technique.
 
-**Step 1:** Convert the provided similarity value (${similarity}) — which ranges from 0 to 1 — into a percentage by multiplying it by 100. Round it to two decimal places.
+Step 1: Convert ${similarity} (0 to 1) to a percentage by multiplying by 100 and rounding to two decimals.
+Step 2: Based on the similarity percentage:
+-If ≤ 65%:
+State that the explanation is incomplete. Give Pros and Cons:
+-Pros: Any correct or partially correct points.
+-Cons: Missing ideas, inaccuracies, or lack of depth.
+Provide clear steps to improve.
 
-**Step 2:** Based on the converted percentage:
-- If the similarity is **65% or below**, provide clear, professional feedback explaining where the explanation diverges and what key ideas were missed. Include concise suggestions for improvement.
-- If the similarity is **70% or above**, acknowledge the user’s strong understanding, highlight precise areas of alignment, and recommend minor refinements if needed.
+-If ≥ 70%:
+Give balanced Pros and Cons:
+-Pros: Correct points and clarity.
+-Cons: Minor gaps or unclear areas.
+Suggest brief refinements.
 
-**Always:**
-- Mention the similarity percentage explicitly.
-- Keep your feedback within **250 words**.
-- Maintain a **polished, encouraging, and professional tone**.
+Always:
+State the similarity percentage.
+Keep feedback under 250 words.
+Maintain a professional, concise, honest tone — supportive but critical where required, without unnecessary praise.
 
 ### Reference Explanation:
 ${feynmanQueryResponse}
