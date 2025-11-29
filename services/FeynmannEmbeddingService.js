@@ -4,11 +4,6 @@ const { getRandomGeminiKey } = require("../utils/GeminiKeys");
 
 //These 2 will come from flutter frontend ek jo gemini dega aur dusra jo user type ya bolega
 
-function normalizeVector(vector) {
-  const norm = Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0));
-  return vector.map(val => val / norm);
-}
-
 const FeynmanEmbeddingService = async (feynmanQueryResponse, feynmanUserResponse) => {
   try {
 
@@ -31,10 +26,7 @@ const FeynmanEmbeddingService = async (feynmanQueryResponse, feynmanUserResponse
       throw new Error("Failed to retrieve valid embeddings.");
     }
 
-    const vec1Norm = normalizeVector(embeddings[0]);
-    const vec2Norm = normalizeVector(embeddings[1]);
-
-    const cosineSim = similarity(vec1Norm, vec2Norm);
+     const cosineSim = similarity(embeddings[0], embeddings[1]);
 
     //Similarity score milgis do ke beech ki
     return {
