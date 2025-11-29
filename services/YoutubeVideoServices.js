@@ -8,8 +8,6 @@ function delay(ms) {
 
 async function summarizeSubtitles(subtitles, attempt = 1, maxRetries = 5) {
   const apiKey = getRandomGeminiKey();
-  console.log(`Using Gemini API Key: ${apiKey} | Attempt ${attempt}`);
-
   try {
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,

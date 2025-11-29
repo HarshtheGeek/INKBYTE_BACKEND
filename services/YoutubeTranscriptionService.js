@@ -5,9 +5,7 @@ const BASE_URL = "https://www.youtube-transcript.io/api/transcripts";
 
 const getTranscript = async (videoId) => {
   try {
-    const transcriptKey = getRandomTranscriptKey();
-    console.log("Using key:", transcriptKey);
-    
+    const transcriptKey = getRandomTranscriptKey();    
     const response = await axios.post(
       BASE_URL,
       { ids: [videoId] },

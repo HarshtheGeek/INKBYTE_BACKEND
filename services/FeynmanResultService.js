@@ -8,7 +8,6 @@ function delay(ms) {
 
 const feynSimilarity = async (similarity,feynmanQueryResponse,feynmanUserResponse, attempt = 1, maxRetries = 3) => {
   const apiKey = getRandomGeminiKey();
-  console.log(`Using Gemini API Key: ${apiKey} | Attempt ${attempt}`);
 
   try {
     const response = await axios.post(

@@ -8,6 +8,7 @@ const youtubeRoutes = require('./routes/youtubeService-route');
 const flashcardRoutes = require('./routes/flashCardService-route');
 const feynmanRoutes = require('./routes/feynmannService-route');
 const redis = require('./config/redis');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -15,12 +16,20 @@ const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to Database
 connectDB();
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000, 
+  max: 5, 
+  message: "You are sending requests too quickly comarade. Please slow down."
+});
+
+
+app.use('/api', limiter);
 
 
 // Redis connectivity test on server startup

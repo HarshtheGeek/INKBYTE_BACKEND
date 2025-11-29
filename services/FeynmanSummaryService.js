@@ -8,7 +8,6 @@ function delay(ms) {
 
  const feynSummarizer = async (recognizedUserText, attempt = 1, maxRetries = 5) => {
   const apiKey = getRandomGeminiKey();
-  console.log(`Using Gemini API Key: ${apiKey} | Attempt ${attempt}`);
 
   try {
     const response = await axios.post(
