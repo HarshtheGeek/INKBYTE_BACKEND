@@ -10,7 +10,7 @@ async function summarizeSubtitles(subtitles, attempt = 1, maxRetries = 5) {
   const apiKey = getRandomGeminiKey();
   try {
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${apiKey}`,
       {
         contents: [
           {
