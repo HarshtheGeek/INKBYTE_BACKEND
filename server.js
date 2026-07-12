@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const connectDB = require('./config/mongodb_config');
 const youtubeRoutes = require('./routes/youtubeService-route');
 const flashcardRoutes = require('./routes/flashCardService-route');
 const feynmanRoutes = require('./routes/feynmannService-route');
@@ -20,8 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1);
 
-// Connect to Database
-connectDB();
+
 
 const limiter = rateLimit({
   windowMs: 60 * 1000, 
