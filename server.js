@@ -54,5 +54,13 @@ app.listen(PORT, "0.0.0.0", () =>
   console.log(`Server running on http://0.0.0.0:${PORT}`)
 );
 
+app.get("/health",(req,res)=>{
+  res.status(200).json({
+    success : true,
+    message : "Website status updated",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  })
+});
 
 
