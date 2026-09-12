@@ -4,6 +4,15 @@ InkByte is the backend service for **InkByte**, a mobile application that provid
 
 **Live Application:** https://app-inkbyte.netlify.app/
 
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/d723e273-4b44-456a-a85d-8a71d6764f84"
+    alt="InkByte Demo"
+    width="800"
+  />
+</p>
+
+
 ## Table of Contents
 
 * [Features](#features)
