@@ -2,6 +2,8 @@
 
 InkByte is the backend service for **InkByte**, a mobile application that provides concise summaries of YouTube videos. This backend handles video transcription, summary generation, and API endpoints for the mobile app.
 
+**Live Application:** [InkByte](https://app-inkbyte.netlify.app/)
+
 ## Table of Contents
 
 * [Features](#features)
