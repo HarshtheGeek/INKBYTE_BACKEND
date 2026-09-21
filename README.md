@@ -1,6 +1,17 @@
-# INKBYTE_BACKEND
+# INKBYTE
 
 InkByte is the backend service for **InkByte**, a mobile application that provides concise summaries of YouTube videos. This backend handles video transcription, summary generation, and API endpoints for the mobile app.
+
+**Live Application:** https://app-inkbyte.netlify.app/
+
+<p align="center">
+  <img
+    src="https://github.com/user-attachments/assets/d723e273-4b44-456a-a85d-8a71d6764f84"
+    alt="InkByte Demo"
+    width="800"
+  />
+</p>
+
 
 ## Table of Contents
 
@@ -103,5 +114,3 @@ Response:
 
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
-
-Do you want me to do that?
