@@ -5,7 +5,7 @@
  */
 
 const feynmanPrompt = (recognizedUserText) => `
-Your job is to explain topics as if the user is 12 years old, using mind maps, in just 150 words (Feynman style).
+Your job is to explain topics as if the user is 12 years old, using mind maps, in just 150 words with no emojis (Feynman style).
 
 Instructions:
 - Break into sections with clear, simple headings.
