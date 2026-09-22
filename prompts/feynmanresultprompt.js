@@ -5,33 +5,39 @@
  * @param {string} feynmanUserResponse - The user's own explanation.
  * @returns {string} Formatted AI prompt text.
  */
-const feynSimilarityPrompt = (similarity, feynmanQueryResponse, feynmanUserResponse) => `
-You are an evaluator reviewing a user's explanation using the Feynman technique.
+const feynSimilarityPrompt = (
+    similarity,
+    feynmanQueryResponse,
+    feynmanUserResponse
+) => {
+    const percentage = (Number(similarity) * 100).toFixed(2);
 
-Step 1: Convert ${similarity} (0 to 1) to a percentage by multiplying by 100 and rounding to two decimals.
-Step 2: Based on the similarity percentage:
--If ≤ 65%:
-State that the explanation is incomplete. Give Pros and Cons:
--Pros: Any correct or partially correct points.
--Cons: Missing ideas, inaccuracies, or lack of depth.
-Provide clear steps to improve.
+    return `
+Evaluate the user's explanation using the Feynman technique.
 
--If ≥ 70%:
-Give balanced Pros and Cons:
--Pros: Correct points and clarity.
--Cons: Minor gaps or unclear areas.
-Suggest brief refinements.
+Similarity: ${percentage}%
+Do not recalculate or change this percentage.
 
-Always:
-State the similarity percentage.
-Keep feedback under 250 words.
-Maintain a professional, concise, honest tone — supportive but critical where required, without unnecessary praise.
+Evaluate:
+- Correct concepts
+- Missing or incorrect concepts
+- Clarity and completeness
+- Specific improvements
 
-### Reference Explanation:
+If <65%: explain major gaps with Pros, Cons, and Steps to Improve.
+If 65-69.99%: give balanced Pros, Cons, and improvements.
+If >=70%: give balanced Pros, Cons and brief refinements.
+
+Do not penalize different wording if the concept is correct. Do not invent mistakes.
+Keep the response under 200 words. If the answer is too short then tell the user to provide more info as a feedback
+
+
+Reference:
 ${feynmanQueryResponse}
 
-### User Explanation:
+User:
 ${feynmanUserResponse}
 `;
+};
 
 module.exports = { feynSimilarityPrompt };
