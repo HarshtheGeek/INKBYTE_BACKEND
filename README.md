@@ -1,6 +1,6 @@
 # INKBYTE
 
-InkByte is the backend service for **InkByte**, a mobile application that provides concise summaries of YouTube videos. This backend handles video transcription, summary generation, and API endpoints for the mobile app.
+InkByte is the backend service for **InkByte**, a mobile application that provides concise summaries of YouTube videos and AI-powered learning features. The backend handles video transcription, summary generation, flashcard generation, Feynman-style explanations, and semantic evaluation.
 
 **Live Application:** https://app-inkbyte.netlify.app/
 
@@ -11,7 +11,6 @@ InkByte is the backend service for **InkByte**, a mobile application that provid
     width="800"
   />
 </p>
-
 
 ## Table of Contents
 
@@ -27,9 +26,12 @@ InkByte is the backend service for **InkByte**, a mobile application that provid
 ## Features
 
 * Summarizes YouTube videos using embeddings and AI processing
+* Generates AI-powered flashcards from any topic
+* Generates simplified explanations using the Feynman learning technique
+* Evaluates user explanations using semantic similarity and cosine similarity
 * Stores and caches results using **Redis** for faster responses
-* Handles user requests via secure REST APIs
-* Scalable architecture with **Node.js** and **Express**
+* Handles user requests through secure REST APIs
+* Scalable backend architecture using **Node.js** and **Express**
 
 ## Tech Stack
 
@@ -37,7 +39,7 @@ InkByte is the backend service for **InkByte**, a mobile application that provid
 * **Express.js** – Web framework for routing and APIs
 * **Firebase** – User authentication and database
 * **Redis** – Caching frequently requested summaries
-* **Embedding Models** – AI-powered video understanding
+* **Embedding Models** – Semantic similarity and AI-powered video understanding
 * **Flutter** – Mobile frontend (client app)
 
 ## Installation
@@ -73,7 +75,57 @@ npm run dev
 
 ## Usage
 
-Start the server and connect your Flutter app to the backend API endpoints. Example requests:
+Start the server and connect your Flutter app to the backend API endpoints.
+
+## API Endpoints
+
+| Method | Endpoint                 | Description                                           |
+| ------ | ------------------------ | ----------------------------------------------------- |
+| POST   | `/api/summarize`         | Generate a concise summary from a YouTube URL         |
+| POST   | `/api/flashcards`        | Generate AI-powered flashcards for a given topic      |
+| POST   | `/api/feynmann`          | Generate a simplified Feynman-style explanation       |
+| POST   | `/api/feynman-embedding` | Evaluate a user's explanation using cosine similarity |
+| GET    | `/api/feynmann`          | Fetch a generated Feynman explanation                 |
+| GET    | `/api/summary/:id`       | Fetch a cached video summary by ID                    |
+| GET    | `/api/health`            | Health check endpoint                                 |
+
+### Example Requests
+
+**Generate Flashcards**
+
+```http
+POST /api/flashcards
+Content-Type: application/json
+
+{
+  "topic": "Operating systems"
+}
+```
+
+**Generate Feynman Explanation**
+
+```http
+POST /api/feynmann
+Content-Type: application/json
+
+{
+  "topic": "What is an operating system?"
+}
+```
+
+**Evaluate User Explanation**
+
+```http
+POST /api/feynman-embedding
+Content-Type: application/json
+
+{
+  "feynmanQueryResponse": "...",
+  "feynmanUserResponse": "..."
+}
+```
+
+**Generate Video Summary**
 
 ```http
 POST /api/summarize
@@ -83,24 +135,6 @@ Content-Type: application/json
   "videoUrl": "https://www.youtube.com/watch?v=example"
 }
 ```
-
-Response:
-
-```json
-{
-  "summary": "This is a concise summary of the video."
-}
-```
-
-## API Endpoints
-
-| Method | Endpoint         | Description                         |
-| ------ | ---------------- | ----------------------------------- |
-| POST   | /api/summarize   | Generate summary from a YouTube URL |
-| GET    | /api/summary/:id | Fetch cached summary by ID          |
-| GET    | /api/health      | Health check endpoint               |
-
-> Add more endpoints as needed for your mobile app.
 
 ## Contributing
 
@@ -113,4 +147,3 @@ Response:
 ## License
 
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
